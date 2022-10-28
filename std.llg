@@ -1,0 +1,150 @@
+comment:[comment,standard llang lib has been loaded];
+comment;
+
+help:[
+    _usage:[];
+    help_name:[@[-1],_usage];
+    out->&help_name;
+];
+help_usage:[help->help;];
+
+run:[
+    _run:[];
+    run_name:[@[-1],_run];
+    &run_name;
+];
+run_run:[out->run_usage;];
+run_usage:[run->run;];
+
+choice:[];
+true:[choice[-2]];
+false:[choice[-1]];
+
+logic:[];
+same:[list_first,list_second];
+same_run:[same_run,same[0],same[1]];
+same_usage:[comment:[comment,same_run will push true or false to logic];comment;];
+
+equal:[list_first,list_second];
+equal_run:[same:[equal[0][0],equal[1][0]];same_run;];
+
+and:[];
+and_remind:[
+    @[-1];
+    and<logic[-1];
+];
+and_run:[
+    choice:[];
+    choice<and[-1]'and[-2];
+    logic<and[-2][0];
+];
+and_usage:[
+    a:[];
+    b'd:[a];
+    c:[b];
+    equal:[b,c];
+    and_remind->equal_run;
+    equal:[b,d];
+    and_remind->equal_run;
+    out->and;
+    and_run;
+    out->logic;
+];
+
+or:[];
+or_remind:[
+    @[-1];
+    or<logic[-1];
+];
+or_run:[
+    choice:[];
+    choice<or[-2]'or[-1];
+    logic<or[-2][0];
+];
+or_usage:[out->and_usage;];
+
+not:[];
+not_remind:[
+    @[-1];
+    not<logic[-1];
+];
+not_run:[
+    choice:[];
+    choice<false'true;
+    logic<not[-1][0];
+];
+not_usage:[out->and_usage;];
+
+if:[if_condition,true_action,false_action];
+if_run:[
+    choice'logic:[];
+    if[0];
+    choice<if[1]'if[2];
+    logic[0];
+];
+if_usage:[
+    out->if'if_run;
+    a:[a,b];
+    b:[a[0]];
+    same:[a,b[0]];
+    true_action:[out->a;];
+    false_action:[out->b;];
+    if:[same_run,true_action,false_action];
+    if_run;
+    out->if_usage;
+];
+
+until:[until_condition,until_action];
+until_run:[
+    until_program:[];
+    if:[until[0],0,until[1]'until_run;];
+    if_run;
+];
+until_usage:[
+    out->until'until_run;
+    a:[1,2,3,4,5];
+    b:[5,1,2,3,4];
+    out->a'b;
+    equal:[a,b];
+    until_action:[1->a;out->a;];
+    until:[equal_run,until_action];
+    until_run;
+    out->until_usage;
+];
+
+
+foreach:[foreach_list,foreach_action];
+foreach_run:[
+    foreach_end:[];
+    foreach[0]<foreach_end;
+    same:[foreach[0][0],foreach_end];
+    until_action:[foreach[1],foreach[0]++;];
+    until:[same_run,until_action];
+    until_run;
+];
+foreach_usage:[
+    out->foreach'foreach_run;
+    a:[1,2,3,4,5];
+    foreach:[a,out->a[0];];
+    foreach_run;
+    out->foreach_usage;
+];
+
+
+connect:[list_first,list_second];
+connect_ans:[];
+connect_run:[
+    foreach:[connect[0],connect_ans<connect[0][0];];
+    foreach_run;
+    foreach:[connect[1],connect_ans<connect[1][0];];
+    foreach_run;
+];
+connect_usage:[
+    out->connect'connect_ans'connect_run;
+    a:[1,2,3,4,5];
+    b:[6,7,8,9,10];
+    out->a'b;
+    connect:[a,b];
+    connect_run;
+    out->connect_ans;
+];
