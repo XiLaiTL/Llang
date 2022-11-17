@@ -42,9 +42,6 @@
     <ClCompile Include="llang_visitor.ixx">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="llang_environment.ixx">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="llang_list.ixx">
       <Filter>源文件</Filter>
     </ClCompile>

@@ -148,7 +148,6 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="llang_environment.ixx" />
     <ClCompile Include="llang.cpp" />
     <ClCompile Include="llang_visitor.ixx" />
     <ClCompile Include="llang_list.ixx" />
