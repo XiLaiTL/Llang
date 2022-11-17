@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\vcpkg.D.cppdev.vcpkg.1.0.0\build\native\vcpkg.D.cppdev.vcpkg.props" Condition="Exists('packages\vcpkg.D.cppdev.vcpkg.1.0.0\build\native\vcpkg.D.cppdev.vcpkg.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -147,19 +148,20 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="llang_environment.ixx" />
     <ClCompile Include="llang.cpp" />
-    <ClCompile Include="LlangVisitor.cpp" />
+    <ClCompile Include="llang_visitor.ixx" />
+    <ClCompile Include="llang_list.ixx" />
     <ClCompile Include="llang_simpleBaseListener.cpp" />
     <ClCompile Include="llang_simpleBaseVisitor.cpp" />
     <ClCompile Include="llang_simpleLexer.cpp" />
     <ClCompile Include="llang_simpleListener.cpp" />
     <ClCompile Include="llang_simpleParser.cpp" />
     <ClCompile Include="llang_simpleVisitor.cpp" />
-    <ClCompile Include="utils.ixx" />
+    <ClCompile Include="llang_utils.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="antlr4-runtime.h" />
-    <ClInclude Include="LlangVisitor.h" />
     <ClInclude Include="llang_simpleBaseListener.h" />
     <ClInclude Include="llang_simpleBaseVisitor.h" />
     <ClInclude Include="llang_simpleLexer.h" />
@@ -169,9 +171,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="compile-garmmar.sh" />
+    <None Include="packages.config" />
     <None Include="vcpkg.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\vcpkg.D.cppdev.vcpkg.1.0.0\build\native\vcpkg.D.cppdev.vcpkg.targets" Condition="Exists('packages\vcpkg.D.cppdev.vcpkg.1.0.0\build\native\vcpkg.D.cppdev.vcpkg.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\vcpkg.D.cppdev.vcpkg.1.0.0\build\native\vcpkg.D.cppdev.vcpkg.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\vcpkg.D.cppdev.vcpkg.1.0.0\build\native\vcpkg.D.cppdev.vcpkg.props'))" />
+    <Error Condition="!Exists('packages\vcpkg.D.cppdev.vcpkg.1.0.0\build\native\vcpkg.D.cppdev.vcpkg.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\vcpkg.D.cppdev.vcpkg.1.0.0\build\native\vcpkg.D.cppdev.vcpkg.targets'))" />
+  </Target>
 </Project>

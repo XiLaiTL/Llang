@@ -1,9 +1,12 @@
 ﻿#include "antlr4-runtime.h"
 #include "llang_simpleLexer.h"
 #include "llang_simpleParser.h"
-#include "LlangVisitor.h"
+//#include "LlangVisitor.h"
 import <iostream>;
-import llang_utils;
+import <string>;
+import llang.visitor;
+import llang.utils;
+using std::string;
 using std::cout, std::operator<<, std::endl;
 using antlr4::ANTLRInputStream, antlr4::CommonTokenStream, antlr4::tree::ParseTree, antlr4::Parser;
 using llang::llang_simpleLexer;
@@ -28,7 +31,7 @@ auto main(int argc, const char* argv[])->int {
     parser.setBuildParseTree(true);
     auto tree = parser.application();
     cout<< tree->toStringTree(&parser) << endl;
-    auto visitor = LlangVisitor(llang::LlangEnvironment::getGlobalEnvironment());
+    auto visitor = LlangVisitor(llang::getGlobalEnvironment());
     visitor.visit(tree);
 
     cout << endl << "Output:" << endl;

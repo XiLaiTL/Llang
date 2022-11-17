@@ -1,51 +1,56 @@
 module;
-#include <sstream>
-#include<array>
-import <ctime>;
-import <iostream>;
-import <string>;
+#include<ctime>
+export module llang.utils;
+
 import <map>;
 import <chrono>;
+import <array>;
+import <sstream>;
+import <iostream>;
+import <string>;
 using std::string;
+using namespace std::string_literals;
 using std::map;
 using std::cout, std::operator<<, std::endl;
 using std::stringstream;
 
-export module llang_utils;
+
+
 namespace llang {
 	enum class LLBaseOutPutType {
 		LLTestOutput, LLOutput
 	};
 	export using LLBaseOutPutType::LLTestOutput;
 	export using LLBaseOutPutType::LLOutput;
+	
 	auto stringQueue = stringstream{};
-	export auto LLPrint(auto message,LLBaseOutPutType outputType = LLTestOutput)->void {
+	export auto LLPrint(string message, LLBaseOutPutType outputType = LLTestOutput) -> void {
 		cout << message;
 		if (outputType == LLOutput)
 			stringQueue << message;
 	}
-	export auto LLPrintln(auto message, LLBaseOutPutType outputType = LLTestOutput)->void {
-		cout << message <<endl;
+	export auto LLPrintln(string message, LLBaseOutPutType outputType = LLTestOutput) -> void {
+		cout << message << endl;
 		if (outputType == LLOutput)
 			stringQueue << message << endl;
 	}
-	export auto LLPrintALL()->void { cout << stringQueue.str() << endl; }
+	export auto LLPrintALL() -> void { cout << stringQueue.str() << endl; }
 
 	export auto LocalTimeNormalize()->string;
 	export auto LocalTimeNow()->string;
 
-	export constexpr auto enumStringToInt(const char* name)->unsigned long long;
-	export constexpr unsigned long long operator"" L(const char* _Str, std::size_t _Len) { return enumStringToInt(_Str);}
+	export constexpr auto enumStringToInt(const char* name)->unsigned long long {
+		auto result = unsigned long long{ 0 };
+		for (auto j = 0; name[j] != '\0'; j++) {
+			result = (result * 131) + name[j];
+		}
+		return result;
+	}
+	export constexpr unsigned long long operator"" L(const char* _Str, std::size_t _Len) { return enumStringToInt(_Str); }
 }
 
 module:private;
-constexpr auto llang::enumStringToInt(const char* name)->unsigned long long {
-	auto result = unsigned long long{ 0 };
-	for (auto j = 0; name[j]!='\0'; j++) {
-		result = (result * 131) + name[j];
-	}
-	return result;
-}
+
 auto llang::LocalTimeNormalize()->string
 {
 	auto secSinceEpoch = std::time_t{ std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()) };    //Seconds since the Epoch
@@ -60,3 +65,4 @@ auto llang::LocalTimeNow()->string
 	auto t1 = std::chrono::high_resolution_clock::now();
 	return std::to_string(t1.time_since_epoch().count());
 }
+

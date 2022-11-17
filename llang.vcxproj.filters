@@ -36,10 +36,16 @@
     <ClCompile Include="llang_simpleVisitor.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="LlangVisitor.cpp">
+    <ClCompile Include="llang_utils.ixx">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="utils.ixx">
+    <ClCompile Include="llang_visitor.ixx">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="llang_environment.ixx">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="llang_list.ixx">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,9 +71,6 @@
     <ClInclude Include="llang_simpleVisitor.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="LlangVisitor.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json">
@@ -76,5 +79,6 @@
     <None Include="compile-garmmar.sh">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
